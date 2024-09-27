@@ -14,12 +14,7 @@
             "x": 0.98,
             "y": 0.5,
             "uniqueID": 1726863285604,
-            "ioValues": [
-                {
-                    "name": "number or geometry",
-                    "ioValue": 1727477739384
-                }
-            ],
+            "ioValues": [],
             "description": "Connect geometry here to make it available in the next level up. "
         },
         {
@@ -57,8 +52,8 @@
         {
             "atomType": "Rectangle",
             "name": "Rectangle",
-            "x": 0.21488372093023256,
-            "y": 0.5403899721448467,
+            "x": 0.1516279069767442,
+            "y": 0.4818941504178273,
             "uniqueID": 1727477713879,
             "ioValues": [
                 {
@@ -75,8 +70,8 @@
         {
             "atomType": "Extrude",
             "name": "Extrude",
-            "x": 0.373953488372093,
-            "y": 0.41225626740947074,
+            "x": 0.27162790697674416,
+            "y": 0.34818941504178275,
             "uniqueID": 1727477720348,
             "ioValues": [
                 {
@@ -99,7 +94,7 @@
             "ioValues": [
                 {
                     "name": "geometry",
-                    "ioValue": 1727477720348
+                    "ioValue": 1727478519362
                 },
                 {
                     "name": "x-axis degrees",
@@ -117,22 +112,76 @@
             "description": "Rotates the input geometry around the X, Y, or Z axis. Inputs are degrees."
         },
         {
-            "atomType": "Difference",
-            "name": "Difference",
-            "x": 0.6213953488372094,
-            "y": 0.6545961002785515,
-            "uniqueID": 1727477739384,
+            "atomType": "Tag",
+            "name": "cutLayout,",
+            "x": 0.27813953488372095,
+            "y": 0.5598885793871866,
+            "uniqueID": 1727478519362,
             "ioValues": [
                 {
-                    "name": "geometry2",
-                    "ioValue": 1727477728631
-                },
-                {
-                    "name": "geometry1",
+                    "name": "geometry",
                     "ioValue": 1727477720348
                 }
             ],
-            "description": "Subtracts shape two from shape one."
+            "description": "Tags geometry so that it can be extracted later.",
+            "tags": [
+                "cutLayout",
+                ""
+            ],
+            "cutTag": true
+        },
+        {
+            "atomType": "Join",
+            "name": "Assembly",
+            "x": 0.5041860465116279,
+            "y": 0.44011142061281333,
+            "uniqueID": 1727478553447,
+            "ioValues": [
+                {
+                    "name": "Shape 1",
+                    "ioValue": 1727478519362
+                },
+                {
+                    "name": "Shape 2",
+                    "ioValue": 1727477728631
+                }
+            ],
+            "description": "Pick between assembly and fusion to join input geometries. Assembly takes multiple shapes together into one, shapes higher in the inputs list will cut into shapes lower on the input list where they overlap. Fusion takes all shapes or sketches and fuses them permanently into a single shape",
+            "unionType": "Assembly"
+        },
+        {
+            "atomType": "CutLayout",
+            "name": "Cut Layout",
+            "x": 0.6325581395348837,
+            "y": 0.5236768802228412,
+            "uniqueID": 1727478582491,
+            "ioValues": [
+                {
+                    "name": "geometry",
+                    "ioValue": 1727478553447
+                },
+                {
+                    "name": "Material Thickness",
+                    "ioValue": 10
+                },
+                {
+                    "name": "Sheet Width",
+                    "ioValue": 96
+                },
+                {
+                    "name": "Sheet Height",
+                    "ioValue": 48
+                },
+                {
+                    "name": "Part Padding",
+                    "ioValue": 0.25
+                },
+                {
+                    "name": "Sheet Padding",
+                    "ioValue": 3
+                }
+            ],
+            "description": "Extracts all parts tagged for cutting and lays them out on a sheet to cut."
         }
     ],
     "allConnectors": [
@@ -155,28 +204,35 @@
             "ap2Name": "geometry",
             "ap2Primary": true,
             "ap1ID": 1727477720348,
+            "ap2ID": 1727478519362
+        },
+        {
+            "ap1Name": "geometry",
+            "ap2Name": "Shape 2",
+            "ap2Primary": false,
+            "ap1ID": 1727477728631,
+            "ap2ID": 1727478553447
+        },
+        {
+            "ap1Name": "geometry",
+            "ap2Name": "geometry",
+            "ap2Primary": true,
+            "ap1ID": 1727478519362,
             "ap2ID": 1727477728631
         },
         {
             "ap1Name": "geometry",
-            "ap2Name": "geometry1",
+            "ap2Name": "Shape 1",
             "ap2Primary": false,
-            "ap1ID": 1727477720348,
-            "ap2ID": 1727477739384
+            "ap1ID": 1727478519362,
+            "ap2ID": 1727478553447
         },
         {
             "ap1Name": "geometry",
-            "ap2Name": "geometry2",
+            "ap2Name": "geometry",
             "ap2Primary": false,
-            "ap1ID": 1727477728631,
-            "ap2ID": 1727477739384
-        },
-        {
-            "ap1Name": "geometry",
-            "ap2Name": "number or geometry",
-            "ap2Primary": false,
-            "ap1ID": 1727477739384,
-            "ap2ID": 1726863285604
+            "ap1ID": 1727478553447,
+            "ap2ID": 1727478582491
         }
     ],
     "fileTypeVersion": 1,
